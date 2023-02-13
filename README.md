@@ -7,3 +7,5 @@ This project has several task to be performed, divided as follow:
 ## Step 1
 The aim of this step is to extract Lidar data from the image, both range image and intensity channels, stack them together and eventually compute the Lidar point-cloud using Open3D library.
 The results of the steps are the following
+![range+intensity](Pics/range_intensity.png)
+/*inserire imm point
