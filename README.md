@@ -19,3 +19,5 @@ In the following images are shown some example of point cloud; I've taken some s
 ![pcl6](Pics/pcl6.png "pcl6") *Preceeding vehicles in a X-junction*
 
 ## Step 2
+The aim of this step is to extract to create Bird's Eye View image from cloud-point data and then compute intensity and height layers of the BEV map.
+![bev](Pics/bev.png) *BEV map*
