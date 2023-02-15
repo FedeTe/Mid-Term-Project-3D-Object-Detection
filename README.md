@@ -20,4 +20,22 @@ In the following images are shown some example of point cloud; I've taken some s
 
 ## Step 2
 The aim of this step is to extract to create Bird's Eye View image from cloud-point data and then compute intensity and height layers of the BEV map.
+### BEV map
 ![bev](Pics/bev.png) *BEV map*
+### Intensity
+Here is the plot of the intensity channel with "raw" values (no modification on the insensity value); the contrast in this picture isn't high, so I've tried to change point distribution to increase it.
+![int_bef_1](Pics/int_bef_1.png) ![int_bef_2](Pics/int_bef_2.png) ![int_bef_3](Pics/int_bef_3.png)
+Intensity distribution points were concentrated between 0.01 and 0.1:
+'''
+b = np.array([0, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1, 1e+1, 1e+3, 1e+3, 1e+4, 1e+5, 1e+6, 1e+7])
+hist,bins = np.histogram(lidar_pcl_cpy[:,3], bins=b)
+print(hist)
+'''
+![distrib](Pics/distrib.png) *Intensity points distribution *
+In order to achieve an higher contrast in the intensity layers I've applied the following correction to the raw values; the idea is to "lower" the points with higher intensity to the mean value and, doing so, increase the contrast.
+'''
+lidar_pcl_cpy[lidar_pcl_cpy[:, 3] > 0.1, 3] = 0.01
+'''
+The result after the correction is the following
+![int_aft_1](Pics/int_aft_1.png)
+![int_aft_2](Pics/int_aft_2.png)
