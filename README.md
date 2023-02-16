@@ -5,8 +5,17 @@ This project has several task to be performed, divided as follow:
 * Step 3
 * step 4
 
+## Reference code
+[loop_over_dataset.py](loop_over_dataset.py)
+<br>
+[objdet_pcl.py](objdet_pcl.py)
+<br>
+[objdet_detect.py](objdet_detect.py)
+<br>
+[objdet_eval.py](objdet_eval.py)
+
 ## Step 1
-The aim of this step is to extract Lidar data from the image, both range image and intensity channels, stack them together and eventually compute the Lidar point-cloud using Open3D library (source code is in [objdet_pcl.py](objdet_pcl.py)).
+The aim of this step is to extract Lidar data from the image, both range image and intensity channels, stack them together and eventually compute the Lidar point-cloud using Open3D library.
 <br>
 The results of the steps are the following:
 ![range+intensity](Pics/range_intensity.png)
@@ -74,4 +83,13 @@ In order to visualize the bounding boxes on the pitcure (only for vehicle class)
 
 ![bb1](Pics/bb1.png)
 
+## Step 4
+In this step evaluation of the object detection is performed; at first some evaluation is performed on a couple of frames then precision and recall are calculated on a larger pool of samples. 
 
+![iou](Pics/iou.png) *Frame 50 results*
+
+The project requests to run precision and recall on 100 samples, here the result.
+
+![pr](Pics/pr.png) *Precision and recall*
+
+Then I repeated the same steps using ground truth data instead of the darknet model results; in this case precision and recall are equal to 1.
