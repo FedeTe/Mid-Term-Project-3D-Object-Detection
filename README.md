@@ -29,14 +29,14 @@ In the following images are shown some example of point cloud; I've taken some s
 ![pcl6](Pics/pcl6.png "pcl6") *Preceeding vehicles in a X-junction*
 
 ## Step 2
-The aim of this step is to extract to create Bird's Eye View image from point-cloud data and then compute intensity and height lchannels of the BEV map.
+The aim of this step is to extract data to create Bird's Eye View image from point-cloud data and then compute intensity and height lchannels of the BEV map.
 
 ### BEV map
 Coordinates from the sensor space have been converted to BEV coordinates.
 ![bev](Pics/bev.png) *BEV map*
 
 ### Intensity channel
-Here is the plot of the intensity channel with "raw" values (no modification on the insensity value); the contrast in this picture isn't high, so I've tried to change point distribution to increase it.
+Here is the plot of the intensity channel with "raw" values (no modification on the insensity values); the contrast in this picture isn't high, so I've tried to change point distribution to increase it.
 
 ![int_bef_1](Pics/int_bef_1.png) ![int_bef_2](Pics/int_bef_2.png) ![int_bef_3](Pics/int_bef_3.png)
 
@@ -48,7 +48,9 @@ hist,bins = np.histogram(lidar_pcl_cpy[:,3], bins=b)
 print(hist)
 ```
 
-![distrib](Pics/distrib.png) *Intensity points distribution*
+![distrib](Pics/distrib.png) 
+<br>
+*Intensity points distribution*
 
 In order to achieve an higher contrast in the intensity layers I've applied the following correction to the raw values; the idea is to "lower" the points with higher intensity to the mean value and, doing so, increase the contrast.
 
@@ -62,7 +64,7 @@ The result after the correction is the following:
 ![int_aft_2](Pics/int_aft_2.png)
 
 ### Height channel
-Resulting height channel picture has good contrast, no modification have been applies to the raw values.
+Resulting height channel picture has good contrast, no modification have been applied to the raw values.
 
 ![hei_1](Pics/hei_1.png)
 ![hei_2](Pics/hei_2.png)
@@ -72,12 +74,37 @@ The aim of this step is to set configuration for the resnet model, run the model
 I've used the following configuration for the resnet model:
 
 ```
-inserire config
+configs.model_path = os.path.join(parent_path, 'tools', 'objdet_models', 'resnet')
+configs.pretrained_filename = os.path.join(configs.model_path, 'pretrained', 'fpn_resnet_18_epoch_300.pth')
+configs.arch = 'fpn_resnet'
+configs.cfgfile = os.path.join(configs.model_path, 'config', 'resnet.cfg')
+
+configs.num_layers = 18
+configs.conf_thresh = 0.5
+configs.k = 40
+
+configs.pin_memory = True
+configs.distributed = False
+configs.input_size = (608, 608)
+configs.hm_size = (152, 152)
+configs.down_ratio = 4
+configs.max_objects = 50
+configs.imagenet_pretrained = False
+configs.head_conv = 64
+configs.num_classes = 3
+configs.num_center_offset = 2
+configs.num_z = 1
+configs.num_dim = 3
+configs.num_direction = 2
+        configs.heads = {'hm_cen': configs.num_classes, 'cen_offset': configs.num_center_offset, 'direction': configs.num_direction, 'z_coor': configs.num_z,'dim': configs.num_dim}
+        configs.num_input_features = 4
 ```
 
 At this point, the detection arrays (on 2 sample frames) look like this:
 
-![detect](Pics/detect.png) *Detection arrays*
+![detect](Pics/detect.png) 
+<br>
+*Detection arrays*
 
 In order to visualize the bounding boxes on the pitcure (only for vehicle class), BEV coordinates has to be converted into metric coordinates. The result of the operation is shown in the next picture; the model successfully detected and classified the object as vehicle.
 
@@ -85,16 +112,22 @@ In order to visualize the bounding boxes on the pitcure (only for vehicle class)
 
 ## Step 4
 In this step evaluation of the object detection is performed; at first some evaluation is performed on a couple of frames then precision and recall are calculated on a larger pool of samples. 
-
-![iou](Pics/iou.png) *Frame 50 results*
+  
+![iou](Pics/iou.png) 
+<br>
+*Frame 50 and 51*
 
 The project requests to run precision and recall on 100 samples, here the result.
 
-![pr1](Pics/pr1.png) *Precision and recall on object detection model results*
+![pr1](Pics/pr1.png) 
+<br>
+*Precision and recall on object detection model results*
 
 Then I repeated the same steps using ground truth data instead of the darknet model results; in this case precision and recall are equal to 1.
 
-![pr2](Pics/pr2.png) *Precision and recall on ground truth data*
+![pr2](Pics/pr2.png) 
+<br>
+*Precision and recall on ground truth data*
 
 ## General comment
 There're some inconsistency in the code provided for the project so the students has to check/modify code even if it's not part of the exercise. 
