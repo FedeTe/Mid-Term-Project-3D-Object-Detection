@@ -90,6 +90,11 @@ In this step evaluation of the object detection is performed; at first some eval
 
 The project requests to run precision and recall on 100 samples, here the result.
 
-![pr](Pics/pr.png) *Precision and recall*
+![pr1](Pics/pr1.png) *Precision and recall on object detection model results*
 
 Then I repeated the same steps using ground truth data instead of the darknet model results; in this case precision and recall are equal to 1.
+
+![pr2](Pics/pr2.png) *Precision and recall on ground truth data*
+
+## General comment
+There're some inconsistency in the code provided for the project so the students has to check/modify code even if it's not part of the exercise. 
