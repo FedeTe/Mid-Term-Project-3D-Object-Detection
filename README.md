@@ -70,8 +70,8 @@ At this point, the detection arrays (on 2 sample frames) look like this:
 
 ![detect](Pics/detect.png) *Detection arrays*
 
-In order to visualize the bounding boxes on the pitcure (only for vehicle class), BEV coordinates has to be converted into metric coordinates. The result of the operation is shown in the next pictures.
+In order to visualize the bounding boxes on the pitcure (only for vehicle class), BEV coordinates has to be converted into metric coordinates. The result of the operation is shown in the next picture; the model successfully detected and classified the object as vehicle.
 
 ![bb1](Pics/bb1.png)
-![bb2](Pics/bb2.png)
+
 
